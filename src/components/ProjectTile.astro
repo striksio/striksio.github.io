@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { data, id } = Astro.props.project;
+const href = `/projects/${id}/`;
+---
+
+<a class="tile" href={href}>
+  {data.image && <img src={data.image} alt={data.mediaAlt} loading="lazy" />}
+  <div>
+    <h3>{data.title}</h3>
+    <p>{data.summary}</p>
+    <ul class="tags">
+      {data.tags.map((t) => <li>{t}</li>)}
+    </ul>
+  </div>
+</a>
+
+<style>
+  .tile {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--text);
+    transition: border-color 0.15s;
+  }
+  .tile:hover {
+    border-color: var(--accent);
+    text-decoration: none;
+  }
+  .tile:not(:has(img)) {
+    grid-template-columns: 1fr;
+  }
+  img {
+    width: 120px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+  p {
+    margin: 0 0 0.8rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  @media (max-width: 480px) {
+    .tile {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

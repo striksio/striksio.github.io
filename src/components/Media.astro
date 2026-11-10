@@ -1,0 +1,23 @@
+---
+interface Props {
+  video?: string;
+  poster?: string;
+  image?: string;
+  alt: string;
+  label?: string;
+  portrait?: boolean;
+}
+
+const { video, poster, image, alt, label, portrait = false } = Astro.props;
+---
+
+<div class:list={['bbox', { portrait }]}>
+  {label && <span class="bbox-label">{label}</span>}
+  {
+    video ? (
+      <video src={video} poster={poster} autoplay muted loop playsinline preload="metadata" aria-label={alt} />
+    ) : (
+      image && <img src={image} alt={alt} loading="lazy" decoding="async" />
+    )
+  }
+</div>

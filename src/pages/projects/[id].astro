@@ -1,0 +1,114 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Media from '../../components/Media.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+const hasMedia = data.video || data.image;
+---
+
+<Base title={data.title} description={data.summary} image={data.poster ?? data.image}>
+  <article class="wrap project">
+    <a class="back mono" href="/#projects">← all projects</a>
+    <header class:list={['project-head', { 'with-media': hasMedia }]}>
+      <div class="project-intro">
+        <p class="mono year">{data.year}</p>
+        <h1>{data.title}</h1>
+        <p class="summary">{data.summary}</p>
+        <div class="btn-row">
+          {data.links.map((l, i) => <a class:list={['btn', { primary: i === 0 }]} href={l.url}>{l.label}</a>)}
+        </div>
+        <ul class="tags">
+          {data.tags.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+      {
+        hasMedia && (
+          <div class="project-media">
+            <Media video={data.video} poster={data.poster} image={data.image} alt={data.mediaAlt} portrait={data.portrait} label={project.id} />
+          </div>
+        )
+      }
+    </header>
+
+    {
+      data.metrics.length > 0 && (
+        <dl class="metrics project-metrics">
+          {data.metrics.map((m) => (
+            <div>
+              <dt>{m.value}</dt>
+              <dd>{m.label}</dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .project {
+    padding-top: 2.5rem;
+  }
+  .back {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .back:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .project-head {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  .project-head.with-media {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  }
+  .project-intro {
+    display: grid;
+    gap: 1.2rem;
+  }
+  .year {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    letter-spacing: -0.03em;
+  }
+  .summary {
+    margin: 0;
+    font-size: 1.12rem;
+    color: #d8d3ca;
+  }
+  .project-media {
+    margin-top: 1.2rem;
+  }
+  .project-metrics {
+    margin: 3rem 0 0;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+  @media (max-width: 800px) {
+    .project-head.with-media {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

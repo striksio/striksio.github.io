@@ -1,0 +1,94 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Media from './Media.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { data, id } = project;
+const href = `/projects/${id}/`;
+const label = `${String(index + 1).padStart(2, '0')} ${id}`;
+---
+
+<article class="card">
+  <a class="card-media" href={href} tabindex="-1" aria-hidden="true">
+    <Media video={data.video} poster={data.poster} image={data.image} alt={data.mediaAlt} portrait={data.portrait} label={label} />
+  </a>
+  <div class="card-body">
+    <p class="card-year mono">{data.year}</p>
+    <h3><a href={href}>{data.title}</a></h3>
+    <p class="card-summary">{data.summary}</p>
+    {
+      data.metrics.length > 0 && (
+        <dl class="metrics">
+          {data.metrics.map((m) => (
+            <div>
+              <dt>{m.value}</dt>
+              <dd>{m.label}</dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+    <ul class="tags">
+      {data.tags.map((t) => <li>{t}</li>)}
+    </ul>
+    <div class="btn-row">
+      <a class="btn primary" href={href}>Read more</a>
+      {data.links.map((l) => <a class="btn" href={l.url}>{l.label}</a>)}
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 2.5rem;
+    align-items: center;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .card:first-of-type {
+    padding-top: 1rem;
+  }
+  .card:last-of-type {
+    border-bottom: 0;
+  }
+  .card-media {
+    display: block;
+    margin-top: 1.2rem;
+  }
+  .card-body {
+    display: grid;
+    gap: 1.1rem;
+  }
+  .card-year {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  h3 {
+    font-size: 1.9rem;
+  }
+  h3 a {
+    color: var(--text);
+  }
+  h3 a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .card-summary {
+    margin: 0;
+    color: #d8d3ca;
+  }
+  @media (max-width: 800px) {
+    .card {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+    }
+  }
+</style>
