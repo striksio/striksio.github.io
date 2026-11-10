@@ -11,8 +11,8 @@ export const site = {
   // Photo next to the heading on the home page. Leave image empty to hide it.
   hero: {
     image: '/media/jetson-setup.webp',
-    label: 'jetson-orin-nano',
-    alt: 'Nvidia Jetson Orin Nano connected to a Raspberry Pi camera module by an orange ribbon cable.',
+    label: 'jetson-orin-nano + rpi-camera-v2',
+    alt: 'Nvidia Jetson Orin Nano connected to a Raspberry Pi Camera Module V2 by an orange ribbon cable.',
   },
   // Paste the code from Google Search Console here to verify the site.
   googleSiteVerification: '',
