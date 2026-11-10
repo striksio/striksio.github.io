@@ -17,7 +17,7 @@ export const site = {
   // Paste the code from Google Search Console here to verify the site.
   googleSiteVerification: '',
   // Leave empty to hide the email button.
-  email: '',
+  email: 'kyrylo.sh@striksio.me',
   links: [
     { label: 'GitHub', url: 'https://github.com/striksio' },
     { label: 'Hugging Face', url: 'https://huggingface.co/striksio' },
