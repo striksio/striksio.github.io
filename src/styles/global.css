@@ -2,14 +2,15 @@
 @import '@fontsource-variable/jetbrains-mono';
 
 :root {
-  --bg: #0d0d0f;
-  --surface: #151518;
-  --surface-2: #1c1c21;
-  --line: #2a2a31;
-  --text: #f1ede6;
-  --muted: #a39e95;
-  --accent: #ff7a1a;
-  --accent-soft: rgba(255, 122, 26, 0.12);
+  --bg: #0b1018;
+  --surface: #121a26;
+  --surface-2: #1a2433;
+  --line: #263346;
+  --text: #eef2f7;
+  --soft: #cfd6e0;
+  --muted: #93a1b5;
+  --accent: #ff6433;
+  --accent-soft: rgba(255, 100, 51, 0.12);
   --sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
   --width: 1080px;
@@ -92,7 +93,7 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(13, 13, 15, 0.82);
+  background: rgba(11, 16, 24, 0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
@@ -176,14 +177,13 @@ h3 {
   text-decoration: none;
 }
 .btn.primary {
-  background: var(--accent);
+  background: var(--accent-soft);
   border-color: var(--accent);
-  color: #170a00;
+  color: var(--accent);
   font-weight: 600;
 }
 .btn.primary:hover {
-  color: #170a00;
-  filter: brightness(1.1);
+  background: rgba(255, 100, 51, 0.22);
 }
 
 /* Detection-label style tags */
@@ -237,8 +237,9 @@ h3 {
   top: -1px;
   left: -1px;
   transform: translateY(-100%);
-  background: var(--accent);
-  color: #170a00;
+  background: var(--bg);
+  color: var(--accent);
+  border: 1px solid var(--accent);
   font-family: var(--mono);
   font-size: 0.7rem;
   font-weight: 600;
@@ -320,7 +321,7 @@ h3 {
 .prose p,
 .prose ul,
 .prose ol {
-  color: #d8d3ca;
+  color: var(--soft);
   margin: 0 0 1.1rem;
 }
 .prose li {
